@@ -6,12 +6,14 @@ public class Snake {
     private LinkedList<Point> body;
     private Direction direction;
     private int valueFood;
+    private Food food;
     private Barrier barriers;
 
-    public Snake(int x, int y,Barrier barriers) {
+    public Snake(int x, int y,Food food,Barrier barriers) {
         body = new LinkedList<>();
-        body.add(new Point(x, y)); // Agregar la cabeza de la serpiente al inicio
+        body.add(new Point(x, y));
         direction = Direction.UP;
+        this.food = food;
         this.barriers = barriers;
         valueFood = 0;
     }
@@ -43,35 +45,28 @@ public class Snake {
             x--;
         }
 
-        // Crear una nueva cabeza en la nueva posición
         Point newHead = new Point(x, y);
 
-        // Agregar la nueva cabeza al inicio del cuerpo
         body.addFirst(newHead);
 
-        // Eliminar la última parte del cuerpo (la cola)
         body.removeLast();
     }
 
     public void grow() {
-        // Obtener la posición de la última parte del cuerpo
         Point ultimaParte = body.getLast();
 
-        // Agregar una nueva parte al final del cuerpo en la misma posición
         body.addLast(new Point(ultimaParte.x, ultimaParte.y));
     }
 
     public boolean collideSelf() {
-        // Obtener la posición de la cabeza
         Point head = body.getFirst();
 
-        // Verificar si la cabeza se encuentra en alguna parte del cuerpo
         for (int i = 1; i < body.size(); i++) {
             if (head.equals(body.get(i))) {
-                return true; // La cabeza colisionó con alguna parte del cuerpo
+                return true;
             }
         }
-        return false; // No hubo colisión con el cuerpo
+        return false;
     }
     private int adjustLimit(int coor, int maxCoor) {
         if (coor < 0) {
@@ -82,7 +77,22 @@ public class Snake {
             return coor;
         }
     }
-
+    public boolean eat() {
+        Point cabeza = body.getFirst();
+        Point positionFood = new Point(food.getX(),food.getY());
+        if (cabeza.equals(positionFood)) {
+            return true;
+        }
+        return false;
+    }
+    public boolean collideFood() {
+        for (Point p : body) {
+            if (p.x == food.getX() && p.y == food.getY()) {
+                return true;
+            }
+        }
+        return false;
+    }
     public int getValueFood() {
         return valueFood;
     }
