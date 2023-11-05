@@ -123,7 +123,13 @@ public class GameBoard {
         return false;
     }
 
-
+    public void gameOver(){
+        firstTime = false;
+        score.setDate( new Date().toString());
+        score.setPlayerName(presenter.getMyFrame().gentNamePlayer());
+        score.saveScore(score);
+        presenter.gameOver();
+    }
 
     public boolean collideFood() {
         Point head = snake.getBody().getFirst();
@@ -177,5 +183,7 @@ public class GameBoard {
         return score.getScore();
     }
 
-
+    public void updateScoreLabel(int score) {
+        presenter.getMyFrame().getScoreView().updateScoreLabel(score);;
+    }
 }
