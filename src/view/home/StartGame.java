@@ -34,6 +34,8 @@ public class StartGame extends JPanel {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
+        add(levelText,constraints);
+        constraints.gridx = 1;
         add(level,constraints);
 
         constraints.gridy = 2;
