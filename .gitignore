@@ -1,29 +1,53 @@
-### IntelliJ IDEA ###
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Carpeta de compilación
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+target/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Archivos de configuración IDE
+.idea/
+*.iml
+*.ipr
+*.iws
 
-### VS Code ###
-.vscode/
+# Archivos de respaldo
+*~
 
-### Mac OS ###
-.DS_Store
+# Archivos de registro
+*.log
+
+# Archivos de dependencias de Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Carpeta de resultados de pruebas
+test-output/
+
+# Archivos de configuración específicos del IDE Eclipse
+.classpath
+.project
+.settings/
+.springBeans
+
+# Archivos de configuración específicos del IDE IntelliJ
+out/
+.idea_modules/
+
+# Carpeta de configuración de Gradle
+.gradle/
+
+# Carpeta de generación de archivos Gradle
+build/
+
+# Archivos de configuración específicos de Gradle
+gradle.properties
+
+# Archivos de configuración específicos de Maven
+maven.config
+
+# Archivos de configuración específicos de NetBeans
+nb-configuration.xml
