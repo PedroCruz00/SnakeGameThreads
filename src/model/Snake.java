@@ -1,21 +1,22 @@
 package model;
-import java.awt.Point;
+
+import java.awt.*;
 import java.util.LinkedList;
 
 public class Snake {
     private LinkedList<Point> body;
     private Direction direction;
-    private int valueFood;
-    private Food food;
-    private Barrier barriers;
+    private int boardWidth;
+    private int boardHeight;
 
-    public Snake(int x, int y,Food food,Barrier barriers) {
+    public Snake(int x, int y,int initialSize, int boardWidth, int boardHeight) {
         body = new LinkedList<>();
-        body.add(new Point(x, y));
+        for (int i = 0; i < initialSize; i++) {
+            body.add(new Point(x, y + i));
+        }
         direction = Direction.UP;
-        this.food = food;
-        this.barriers = barriers;
-        valueFood = 0;
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
     }
 
     public LinkedList<Point> getBody() {
@@ -44,18 +45,18 @@ public class Snake {
         } else if (direction == Direction.LEFT) {
             x--;
         }
-
+        x = (x + boardWidth) % boardWidth;
+        y = (y + boardHeight) % boardHeight;
         Point newHead = new Point(x, y);
 
         body.addFirst(newHead);
-
         body.removeLast();
+
     }
 
     public void grow() {
-        Point ultimaParte = body.getLast();
-
-        body.addLast(new Point(ultimaParte.x, ultimaParte.y));
+        Point lastPart = body.getLast();
+        body.addLast(new Point(lastPart.x, lastPart.y));
     }
 
     public boolean collideSelf() {
@@ -68,40 +69,6 @@ public class Snake {
         }
         return false;
     }
-    private int adjustLimit(int coor, int maxCoor) {
-        if (coor < 0) {
-            return maxCoor;
-        } else if (coor > maxCoor) {
-            return 0;
-        } else {
-            return coor;
-        }
-    }
-    public boolean eat() {
-        Point cabeza = body.getFirst();
-        Point positionFood = new Point(food.getX(),food.getY());
-        if (cabeza.equals(positionFood)) {
-            return true;
-        }
-        return false;
-    }
-    public boolean collideFood() {
-        for (Point p : body) {
-            if (p.x == food.getX() && p.y == food.getY()) {
-                return true;
-            }
-        }
-        return false;
-    }
-    public int getValueFood() {
-        return valueFood;
-    }
 
-    public void setValueFood(int valueFood) {
-        this.valueFood = valueFood;
-    }
-    public boolean collisionBarrier() {
-        Point head = body.getFirst();
-        return barriers.isBarrier(head.x, head.y);
-    }
 }
+

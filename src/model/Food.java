@@ -1,23 +1,28 @@
 package model;
-
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Food extends Thread {
     private int x;
     private int y;
-    int maxX ;
-    int maxY ;
+    int maxX;
+    int maxY;
     private boolean active;
-    private Snake snake;
-    private int timeOcurrence;
+    private GameBoard gameBoard;
+    private int timeOccurrence;
 
-    public Food(Snake snake, int timeOcurrence, int maxX, int maxY) {
-        this.snake = snake;
-        this.timeOcurrence = timeOcurrence;
+
+    public Food(GameBoard gameBoard, int timeOccurrence, int maxX, int maxY) {
+        this.timeOccurrence = timeOccurrence;
+        this.gameBoard = gameBoard;
         this.active = false;
         this.maxX = maxX;
         this.maxY = maxY;
     }
+
 
     public int getX() {
         return x;
@@ -36,7 +41,7 @@ public class Food extends Thread {
         x = random.nextInt(maxX);
         y = random.nextInt(maxY);
 
-        if (snake.collideFood()) {
+        if (gameBoard.collideFood()) {
             generateNewFood();
         }
 
@@ -51,11 +56,10 @@ public class Food extends Thread {
             }
 
             try {
-                sleep(timeOcurrence);
+                sleep(timeOccurrence);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Food thread interrupted");
             }
-
             active = false;
         }
     }

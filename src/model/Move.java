@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -8,9 +9,13 @@ public class Move extends Thread implements KeyListener {
     private int speed;
     private boolean running;
     private boolean gameOver;
+    private GameBoard gameBoard;
+    private Object gameOverLock;
 
-    public Move(Snake snake, int speed) {
+    public Move(GameBoard gameBoard, Snake snake, int speed) {
         this.snake = snake;
+        this.gameBoard = gameBoard;
+        gameOverLock  = new Object();
         this.speed = speed;
         this.running = true;
         this.gameOver = false;
@@ -22,15 +27,23 @@ public class Move extends Thread implements KeyListener {
 
     private void moveSnake() {
         while (running) {
+            synchronized (gameOverLock) {
+                if (gameOver) {
+                    break;
+                }
+            }
             snake.move();
-            if (snake.collisionBarrier() || snake.collideSelf()) {
+            if (gameBoard.collisionBarrier() || snake.collideSelf()) {
                 running = false;
                 gameOver = true;
+                if (gameOver){
+                    gameBoard.gameOver();
+                }
             }
             try {
                 sleep(speed);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Move thread interrupted");
             }
         }
     }
@@ -55,9 +68,19 @@ public class Move extends Thread implements KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT && snake.getDirection() != Direction.LEFT) {
             snake.setDirection(Direction.RIGHT);
         }
+        if (e.getKeyCode() == KeyEvent.VK_W && snake.getDirection() != Direction.DOWN) {
+            snake.setDirection(Direction.UP);
+        } else if (e.getKeyCode() == KeyEvent.VK_S && snake.getDirection() != Direction.UP) {
+            snake.setDirection(Direction.DOWN);
+        } else if (e.getKeyCode() == KeyEvent.VK_A && snake.getDirection() != Direction.RIGHT) {
+            snake.setDirection(Direction.LEFT);
+        } else if (e.getKeyCode() == KeyEvent.VK_D && snake.getDirection() != Direction.LEFT) {
+            snake.setDirection(Direction.RIGHT);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
 }
+
