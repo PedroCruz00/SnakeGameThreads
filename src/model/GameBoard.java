@@ -28,7 +28,7 @@ public class GameBoard {
     private int initialSize;
 
     public GameBoard(int width, int height, Presenter presenter) {
-        configData();
+        configData("1");
         this.presenter = presenter;
         this.width = width;
         this.height = height;
@@ -41,13 +41,14 @@ public class GameBoard {
     }
 
     public void startGame() {
+        configData(presenter.getMyFrame().getLevel());
         move.start();
         food.start();
         barrier.start();
         score.start();
     }
-    public void configData(){
-        Configuration config = ConfigurationLoader.loadConfig("data/config.properties");
+    public void configData(String level){
+        Configuration config = ConfigurationLoader.loadConfig("data/config.properties",level);
         if (config != null) {
             scoreIncrement = config.getScoreIncrement();
             foodInterval = config.getFoodInterval();
@@ -65,6 +66,7 @@ public class GameBoard {
         barrier.interrupt();
     }
     public void resetGame()  {
+        configData(presenter.getMyFrame().getLevel());
         snake = new Snake(width / 2, height / 2,initialSize, width,height);
         move = new Move(this, snake, speedIncrementInterval);
         food = new Food(this, foodInterval, width, height);

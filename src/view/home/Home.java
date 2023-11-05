@@ -37,4 +37,8 @@ public class Home extends JPanel {
     public String getInputName() {
         return startGame.getInputName().getText();
     }
+    public String getLevel() {
+        return startGame.getLevel();
+    }
+
 }

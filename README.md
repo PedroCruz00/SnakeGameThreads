@@ -10,6 +10,8 @@ Hemos implementado un hilo para gestionar la puntuación del juego. La puntuaci�
 
 ### Comida
 El juego incluye un hilo para mostrar la comida en la pantalla. La comida aparece y desaparece a intervalos regulares. Si la serpiente se come la comida, inmediatamente aparece un nuevo alimento en el tablero. Si no se consume antes de que expire el tiempo, aparece un nuevo alimento en otro lugar.
+### Niveles
+Se han implementado 3 niveles(1,2,3) siendo 1(con el que por defecto se empieza) el de dificultad minima y 3 el de maxima dificultad. Despues de la primera partida, el jugador puede cambiar la dificultad a la que desee
 
 ### Barreras
 Se ha implementado un hilo para gestionar los obstáculos del juego. Las barreras aparecen y desaparecen a intervalos de tiempo determinados. Si la serpiente choca con una barrera, el juego termina.

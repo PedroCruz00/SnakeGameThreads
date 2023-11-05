@@ -93,4 +93,7 @@ public class MyFrame  extends JFrame {
     public ScoreView getScoreView() {
         return scoreView;
     }
+    public String getLevel(){
+        return home.getLevel();
+    }
 }

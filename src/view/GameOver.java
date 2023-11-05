@@ -10,6 +10,7 @@ public class GameOver extends JPanel {
     private GameOver gameOver;
     private MyFrame myFrame;
     private JLabel score;
+    private JLabel name;
     public GameOver(GameBoard gameBoard,ActionListener listener) {
         setLayout(new GridBagLayout());
         gameOver = this;
@@ -27,9 +28,12 @@ public class GameOver extends JPanel {
 
         constraints.gridwidth = 1;
         constraints.gridy = 1;
+        name = new JLabel("Nombre del jugador" + gameBoard.getScore().getPlayerName());
+        add(name,constraints);
+        constraints.gridy = 2;
         score = new JLabel("Su puntaje fue: " + gameBoard.getScore().getScore());
         add(score,constraints);
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         this.add(home,constraints);
     }
 }
